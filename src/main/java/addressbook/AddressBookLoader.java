@@ -14,9 +14,17 @@ import static java.util.stream.Collectors.toList;
 
 public class AddressBookLoader {
 
+    private String resourceName;
+    private Class<?> contextClass;
+
+    public AddressBookLoader(String resourceName, Class<?> contextClass) {
+        this.resourceName = resourceName;
+        this.contextClass = contextClass;
+    }
+
     public List<Person> load() {
         try {
-            String addressBook = Resources.toString(getResource(getClass(), "AddressBook.txt"), defaultCharset());
+            String addressBook = Resources.toString(getResource(contextClass, resourceName), defaultCharset());
 
             return Pattern.compile("\r?\n").splitAsStream(addressBook)
                     .map((String line) -> line.split(", "))

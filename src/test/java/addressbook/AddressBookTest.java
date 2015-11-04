@@ -9,7 +9,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 public class AddressBookTest {
 
-    private final AddressBook addressBook = new AddressBook(new AddressBookLoader());
+    private final AddressBook addressBook = new AddressBook(new AddressBookLoader("AddressBook.txt", AddressBookLoader.class));
 
     @Test
     public void returnsNumberOfMales() {

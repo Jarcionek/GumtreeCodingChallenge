@@ -14,7 +14,7 @@ import static java.util.Arrays.asList;
 
 public class AddressBookLoaderTest {
 
-    private final AddressBookLoader addressBookLoader = new AddressBookLoader();
+    private final AddressBookLoader addressBookLoader = new AddressBookLoader("AddressBook.txt", AddressBookLoader.class);
 
     @Test
     public void loadsAddressBookFromFile() {
