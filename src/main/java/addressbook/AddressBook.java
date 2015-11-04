@@ -12,7 +12,7 @@ public class AddressBook {
     private final List<Person> persons;
 
     public AddressBook(AddressBookLoader addressBookLoader) {
-        persons = addressBookLoader.load();
+        this.persons = addressBookLoader.load();
     }
 
     /**
@@ -38,19 +38,19 @@ public class AddressBook {
      * then returns their age difference in days.
      */
     public int ageDifferenceInDays(Predicate<Person> predicateOne, Predicate<Person> predicateTwo) {
-        LocalDate dateOfBirthOne = persons.stream()
+        return Days.daysBetween(
+                dateOfBirthFor("predicateOne", predicateOne),
+                dateOfBirthFor("predicateTwo", predicateTwo)
+        ).getDays();
+    }
+
+
+    private LocalDate dateOfBirthFor(String predicateName, Predicate<Person> predicateOne) {
+        return persons.stream()
                 .filter(predicateOne)
                 .findFirst()
                 .map(Person::dateOfBirth)
-                .orElseThrow(() -> new IllegalArgumentException("No person found in address book for predicateOne"));
-
-        LocalDate dateOfBirthTwo = persons.stream()
-                .filter(predicateTwo)
-                .findFirst()
-                .map(Person::dateOfBirth)
-                .orElseThrow(() -> new IllegalArgumentException("No person found in address book for predicateTwo"));
-
-        return Days.daysBetween(dateOfBirthOne, dateOfBirthTwo).getDays();
+                .orElseThrow(() -> new IllegalArgumentException("No person found in address book for " + predicateName));
     }
 
 }
