@@ -13,7 +13,7 @@ import static addressbook.Gender.MALE;
 import static com.shazam.shazamcrest.MatcherAssert.assertThat;
 import static com.shazam.shazamcrest.matcher.Matchers.sameBeanAs;
 import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.equalTo;
+import static java.util.Collections.singletonList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -45,7 +45,7 @@ public class AddressBookLoaderTest {
 
         List<Person> persons = addressBookLoader.load();
 
-        assertThat(persons.get(0).dateOfBirth().toString(), equalTo("2000-01-03"));
+        assertThat(persons, sameBeanAs(singletonList(new Person("Little Johny", MALE, LocalDate.of(2000, 1, 3)))));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class AddressBookLoaderTest {
 
         List<Person> persons = addressBookLoader.load();
 
-        assertThat(persons.get(0).dateOfBirth().toString(), equalTo("1915-05-04"));
+        assertThat(persons, sameBeanAs(singletonList(new Person("Grandma Rachel", FEMALE, LocalDate.of(1915, 5, 4)))));
     }
 
     @Test
