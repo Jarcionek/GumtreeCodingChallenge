@@ -25,11 +25,11 @@ public class AddressBookLoaderTest {
         List<Person> persons = addressBookLoader.load();
 
         assertThat(persons, sameBeanAs(asList(
-                new Person("Bill McKnight", MALE,   date(16, 3,  77)),
-                new Person("Paul Robinson", MALE,   date(15, 1,  85)),
-                new Person("Gemma Lane",    FEMALE, date(20, 11, 91)),
-                new Person("Sarah Stone",   FEMALE, date(20, 9,  80)),
-                new Person("Wes Jackson",   MALE,   date(14, 8,  74))
+                new Person("Bill McKnight", MALE, new LocalDate(1977, 3, 16)),
+                new Person("Paul Robinson", MALE, new LocalDate(1985, 1, 15)),
+                new Person("Gemma Lane",    FEMALE, new LocalDate(1991, 11, 20)),
+                new Person("Sarah Stone",   FEMALE, new LocalDate(1980, 9, 20)),
+                new Person("Wes Jackson",   MALE, new LocalDate(1974, 8, 14))
         )));
     }
 
@@ -71,10 +71,6 @@ public class AddressBookLoaderTest {
         expectedException.expectMessage("Not a valid address book file, invalid line: `Number Of commas, Male, 01/01/90,`");
 
         addressBookLoader.load();
-    }
-
-    private static LocalDate date(int day, int month, int year) {
-        return new LocalDate(1900 + year, month, day);
     }
 
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import static com.google.common.io.Resources.getResource;
+import static java.lang.Integer.parseInt;
 import static java.nio.charset.Charset.defaultCharset;
 import static java.util.stream.Collectors.toList;
 
@@ -53,9 +54,9 @@ public class AddressBookLoader {
     }
 
     private static LocalDate newDate(String[] date) {
-        int day = Integer.parseInt(date[0]);
-        int month = Integer.parseInt(date[1]);
-        int year = Integer.parseInt(date[2]);
+        int day = parseInt(date[0]);
+        int month = parseInt(date[1]);
+        int year = parseInt(date[2]);
 
         return new LocalDate(1900 + year, month, day);
     }
