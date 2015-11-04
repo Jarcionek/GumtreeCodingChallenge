@@ -4,6 +4,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.time.temporal.ChronoUnit;
+
 import static addressbook.Gender.FEMALE;
 import static addressbook.Gender.MALE;
 import static com.shazam.shazamcrest.MatcherAssert.assertThat;
@@ -52,8 +54,9 @@ public class AddressBookTest {
     public void calculatesAgeDifferenceWithinSameYear() {
         AddressBook addressBook = new AddressBook(new AddressBookLoader(new Clock(), "TestAddressBook.txt", getClass()));
 
-        long difference = addressBook.ageDifferenceInDays(person -> person.name().equals("Jaroslaw Pawlak"),
-                                                         person -> person.name().equals("Maciej Kowalski"));
+        long difference = addressBook.ageDifference(person -> person.name().equals("Jaroslaw Pawlak"),
+                                                    person -> person.name().equals("Maciej Kowalski"),
+                                                    ChronoUnit.DAYS);
 
         assertThat(difference, equalTo(28L + 31L));
     }
@@ -62,8 +65,9 @@ public class AddressBookTest {
     public void calculatesAgeDifferenceForPeopleBornInDifferentYears() {
         AddressBook addressBook = new AddressBook(new AddressBookLoader(new Clock(), "TestAddressBook.txt", getClass()));
 
-        long difference = addressBook.ageDifferenceInDays(person -> person.name().equals("Sarah Stone"),
-                                                         person -> person.name().equals("Paul Robinson"));
+        long difference = addressBook.ageDifference(person -> person.name().equals("Sarah Stone"),
+                                                    person -> person.name().equals("Paul Robinson"),
+                                                    ChronoUnit.DAYS);
 
         // days between 20/09/80 and 15/01/85
         long daysIn1980 = 10 + 31 + 30 + 31;
@@ -77,7 +81,7 @@ public class AddressBookTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("No person found in address book for predicateOne");
 
-        addressBook.ageDifferenceInDays(person -> false, person -> true);
+        addressBook.ageDifference(person -> false, person -> true, ChronoUnit.DAYS);
     }
 
     @Test
@@ -85,7 +89,7 @@ public class AddressBookTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("No person found in address book for predicateTwo");
 
-        addressBook.ageDifferenceInDays(person -> true, person -> false);
+        addressBook.ageDifference(person -> true, person -> false, ChronoUnit.DAYS);
     }
 
 }
