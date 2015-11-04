@@ -16,4 +16,8 @@ public class Person {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public Gender gender() {
+        return gender;
+    }
+
 }
