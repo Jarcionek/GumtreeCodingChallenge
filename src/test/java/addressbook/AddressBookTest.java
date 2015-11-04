@@ -56,4 +56,20 @@ public class AddressBookTest {
         assertThat(difference, equalTo(28 + 31));
     }
 
+    @Test
+    public void throwsExceptionWhenFirstPersonNotFound() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("XX YY not found in address book");
+
+        addressBook.ageDifference("XX YY", "Gemma Lane");
+    }
+
+    @Test
+    public void throwsExceptionWhenSecondPersonNotFound() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("AA BB not found in address book");
+
+        addressBook.ageDifference("Gemma Lane", "AA BB");
+    }
+
 }

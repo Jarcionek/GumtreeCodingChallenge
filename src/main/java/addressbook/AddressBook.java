@@ -1,6 +1,7 @@
 package addressbook;
 
 import org.joda.time.Days;
+import org.joda.time.LocalDate;
 
 import java.util.List;
 
@@ -27,10 +28,15 @@ public class AddressBook {
     }
 
     public int ageDifference(String nameOne, String nameTwo) {
-        Person personOne = persons.stream().filter((Person person) -> person.name().equals(nameOne)).findFirst().get();
-        Person personTwo = persons.stream().filter((Person person) -> person.name().equals(nameTwo)).findFirst().get();
+        return Days.daysBetween(dateOfBirthOf(nameTwo), dateOfBirthOf(nameOne)).getDays();
+    }
 
-        return Days.daysBetween(personTwo.dateOfBirth(), personOne.dateOfBirth()).getDays();
+    private LocalDate dateOfBirthOf(String name) {
+        return persons.stream()
+                .filter((Person person) -> person.name().equals(name))
+                .findFirst()
+                .map(Person::dateOfBirth)
+                .orElseThrow(() -> new IllegalArgumentException(name + " not found in address book"));
     }
 
 }
