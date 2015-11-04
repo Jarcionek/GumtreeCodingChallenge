@@ -21,11 +21,11 @@ public class AddressBookLoaderTest {
         List<Person> persons = addressBookLoader.load();
 
         assertThat(persons, sameBeanAs(asList(
-                new Person("Bill",  "McKnight", MALE,   date(16, 3,  77)),
-                new Person("Paul",  "Robinson", MALE,   date(15, 1,  85)),
-                new Person("Gemma", "Lane",     FEMALE, date(20, 11, 91)),
-                new Person("Sarah", "Stone",    FEMALE, date(20, 9,  80)),
-                new Person("Wes",   "Jackson",  MALE,   date(14, 8,  74))
+                new Person("Bill McKnight", MALE,   date(16, 3,  77)),
+                new Person("Paul Robinson", MALE,   date(15, 1,  85)),
+                new Person("Gemma Lane",    FEMALE, date(20, 11, 91)),
+                new Person("Sarah Stone",   FEMALE, date(20, 9,  80)),
+                new Person("Wes Jackson",   MALE,   date(14, 8,  74))
         )));
     }
 

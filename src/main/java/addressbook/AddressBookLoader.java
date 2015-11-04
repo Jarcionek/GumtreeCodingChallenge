@@ -29,8 +29,7 @@ public class AddressBookLoader {
 
     private static Person newPerson(String name, String gender, String dateOfBirth) {
         return new Person(
-                name.substring(0, name.indexOf(" ")),
-                name.substring(name.indexOf(" ") + 1, name.length()),
+                name,
                 Gender.valueOf(gender.toUpperCase()),
                 newDate(dateOfBirth.split("/"))
         );
