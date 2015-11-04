@@ -13,24 +13,34 @@ import static java.util.stream.Collectors.toList;
 
 public class AddressBookLoader {
 
-    private String resourceName;
-    private Class<?> contextClass;
+    private static final Pattern pattern = Pattern.compile("[a-zA-Z ]+, (Male|Female), \\d{2}/\\d{2}/\\d{2}");
+
+    private final String resourceName;
+    private final Class<?> contextClass;
 
     public AddressBookLoader(String resourceName, Class<?> contextClass) {
         this.resourceName = resourceName;
         this.contextClass = contextClass;
     }
 
+    @SuppressWarnings("Convert2MethodRef")
     public List<Person> load() {
         try {
             String addressBook = Resources.toString(getResource(contextClass, resourceName), defaultCharset());
 
             return Pattern.compile("\r?\n").splitAsStream(addressBook)
+                    .peek((String line) -> validate(line))
                     .map((String line) -> line.split(", "))
                     .map((String[] array) -> newPerson(array[0], array[1], array[2]))
                     .collect(toList());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static void validate(String line) {
+        if (!pattern.matcher(line).matches()) {
+            throw new IllegalArgumentException("Not a valid address book file, invalid line: `" + line + "`");
         }
     }
 
