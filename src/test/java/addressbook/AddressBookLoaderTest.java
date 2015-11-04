@@ -1,11 +1,11 @@
 package addressbook;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static addressbook.Gender.FEMALE;
@@ -29,18 +29,18 @@ public class AddressBookLoaderTest {
         List<Person> persons = addressBookLoader.load();
 
         assertThat(persons, sameBeanAs(asList(
-                new Person("Bill McKnight", MALE, new LocalDate(1977, 3, 16)),
-                new Person("Paul Robinson", MALE, new LocalDate(1985, 1, 15)),
-                new Person("Gemma Lane", FEMALE, new LocalDate(1991, 11, 20)),
-                new Person("Sarah Stone", FEMALE, new LocalDate(1980, 9, 20)),
-                new Person("Wes Jackson", MALE, new LocalDate(1974, 8, 14))
+                new Person("Bill McKnight", MALE, LocalDate.of(1977, 3, 16)),
+                new Person("Paul Robinson", MALE, LocalDate.of(1985, 1, 15)),
+                new Person("Gemma Lane", FEMALE, LocalDate.of(1991, 11, 20)),
+                new Person("Sarah Stone", FEMALE, LocalDate.of(1980, 9, 20)),
+                new Person("Wes Jackson", MALE, LocalDate.of(1974, 8, 14))
         )));
     }
 
     @Test
     public void setsYear2000forPersonBornThisCentury() {
         Clock clock = mock(Clock.class);
-        when(clock.now()).thenReturn(new LocalDateTime(2015, 11, 4, 12, 34));
+        when(clock.now()).thenReturn(LocalDateTime.of(2015, 11, 4, 12, 34));
         AddressBookLoader addressBookLoader = new AddressBookLoader(clock, "TestAddressBookWithPersonBornThisCentury.txt", AddressBookLoader.class);
 
         List<Person> persons = addressBookLoader.load();
@@ -51,7 +51,7 @@ public class AddressBookLoaderTest {
     @Test
     public void setsYear1900forVeryOldPersonBelowOneHundredYearsOld() {
         Clock clock = mock(Clock.class);
-        when(clock.now()).thenReturn(new LocalDateTime(2015, 1, 1, 0, 0));
+        when(clock.now()).thenReturn(LocalDateTime.of(2015, 1, 1, 0, 0));
         AddressBookLoader addressBookLoader = new AddressBookLoader(clock, "TestAddressBookWithVeryOldPerson.txt", AddressBookLoader.class);
 
         List<Person> persons = addressBookLoader.load();

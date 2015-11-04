@@ -1,8 +1,7 @@
 package addressbook;
 
-import org.joda.time.Days;
-import org.joda.time.LocalDate;
-
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -38,10 +37,9 @@ public class AddressBook {
      * then returns their age difference in days.
      */
     public int ageDifferenceInDays(Predicate<Person> predicateOne, Predicate<Person> predicateTwo) {
-        return Days.daysBetween(
-                dateOfBirthFor("predicateOne", predicateOne),
-                dateOfBirthFor("predicateTwo", predicateTwo)
-        ).getDays();
+        LocalDate dateOne = dateOfBirthFor("predicateOne", predicateOne);
+        LocalDate dateTwo = dateOfBirthFor("predicateTwo", predicateTwo);
+        return (int) dateOne.until(dateTwo, ChronoUnit.DAYS);
     }
 
 

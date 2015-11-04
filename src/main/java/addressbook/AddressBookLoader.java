@@ -1,9 +1,9 @@
 package addressbook;
 
 import com.google.common.io.Resources;
-import org.joda.time.LocalDate;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -64,7 +64,7 @@ public class AddressBookLoader {
             year += 100;
         }
 
-        return new LocalDate(year, month, day);
+        return LocalDate.of(year, month, day);
     }
 
 }
