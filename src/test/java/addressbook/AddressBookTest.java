@@ -1,5 +1,6 @@
 package addressbook;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static addressbook.Gender.FEMALE;
@@ -30,6 +31,16 @@ public class AddressBookTest {
         Person person = addressBook.oldestPerson();
 
         assertThat(person.name(), equalTo("Wes Jackson"));
+    }
+
+    @Ignore("work in progress")
+    @Test
+    public void calculatesAgeDifferenceWithinSameYear() {
+        AddressBook addressBook = new AddressBook(new AddressBookLoader("TestAddressBook.txt", getClass()));
+
+        int difference = addressBook.ageDifference("Maciej Kowalski", "Jaroslaw Pawlak");
+
+        assertThat(difference, equalTo(28 + 31));
     }
 
 }

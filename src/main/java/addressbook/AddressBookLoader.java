@@ -3,8 +3,7 @@ package addressbook;
 import com.google.common.io.Resources;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -43,19 +42,12 @@ public class AddressBookLoader {
         );
     }
 
-    private static Date newDate(String[] date) {
+    private static LocalDate newDate(String[] date) {
         int day = Integer.parseInt(date[0]);
         int month = Integer.parseInt(date[1]);
         int year = Integer.parseInt(date[2]);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, 1900 + year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        return calendar.getTime();
+        return LocalDate.of(1900 + year, month, day);
     }
 
 }

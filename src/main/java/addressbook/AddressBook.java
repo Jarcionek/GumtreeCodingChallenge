@@ -24,4 +24,10 @@ public class AddressBook {
                 .get();
     }
 
+    public int ageDifference(String nameOne, String nameTwo) {
+        Person personOne = persons.stream().filter((Person person) -> person.name().equals(nameOne)).findFirst().get();
+        Person personTwo = persons.stream().filter((Person person) -> person.name().equals(nameTwo)).findFirst().get();
+        return 0;
+    }
+
 }

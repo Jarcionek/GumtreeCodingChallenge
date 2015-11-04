@@ -1,14 +1,14 @@
 package addressbook;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Person {
 
     private final String name;
     private final Gender gender;
-    private final Date dateOfBirth;
+    private final LocalDate dateOfBirth;
 
-    public Person(String name, Gender gender, Date dateOfBirth) {
+    public Person(String name, Gender gender, LocalDate dateOfBirth) {
         this.name = name;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
@@ -22,7 +22,7 @@ public class Person {
         return gender;
     }
 
-    public Date dateOfBirth() {
+    public LocalDate dateOfBirth() {
         return dateOfBirth;
     }
 

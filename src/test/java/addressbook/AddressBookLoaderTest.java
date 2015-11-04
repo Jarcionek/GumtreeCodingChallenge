@@ -2,8 +2,7 @@ package addressbook;
 
 import org.junit.Test;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import static addressbook.Gender.FEMALE;
@@ -29,15 +28,8 @@ public class AddressBookLoaderTest {
         )));
     }
 
-    private static Date date(int day, int month, int year) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, 1900 + year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        return calendar.getTime();
+    private static LocalDate date(int day, int month, int year) {
+        return LocalDate.of(1900 + year, month, day);
     }
 
 }
