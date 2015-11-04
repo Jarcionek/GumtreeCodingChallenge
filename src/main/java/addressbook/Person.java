@@ -14,8 +14,16 @@ public class Person {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String name() {
+        return name;
+    }
+
     public Gender gender() {
         return gender;
+    }
+
+    public Date dateOfBirth() {
+        return dateOfBirth;
     }
 
 }

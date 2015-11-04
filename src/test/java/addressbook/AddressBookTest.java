@@ -25,4 +25,11 @@ public class AddressBookTest {
         assertThat(numberOfMales, equalTo(2));
     }
 
+    @Test
+    public void returnsOldestPerson() {
+        Person person = addressBook.oldestPerson();
+
+        assertThat(person.name(), equalTo("Wes Jackson"));
+    }
+
 }
