@@ -17,9 +17,8 @@ public class Main {
         System.out.println();
 
         System.out.println("How many days older is Bill than Paul?");
-        System.out.println("\t" + addressBook.ageDifference(person -> person.name().startsWith("Bill"),
-                                                            person -> person.name().startsWith("Paul"),
-                                                            TimeUnit.DAYS));
+        System.out.println("\t" + addressBook.ageDifferenceInDays(person -> person.name().startsWith("Bill"),
+                                                                  person -> person.name().startsWith("Paul")));
     }
 
 }

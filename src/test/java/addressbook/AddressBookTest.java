@@ -52,9 +52,8 @@ public class AddressBookTest {
     public void calculatesAgeDifferenceWithinSameYear() {
         AddressBook addressBook = new AddressBook(new AddressBookLoader(new Clock(), "TestAddressBook.txt", getClass()));
 
-        int difference = addressBook.ageDifference(person -> person.name().equals("Jaroslaw Pawlak"),
-                                                   person -> person.name().equals("Maciej Kowalski"),
-                                                   TimeUnit.DAYS);
+        int difference = addressBook.ageDifferenceInDays(person -> person.name().equals("Jaroslaw Pawlak"),
+                                                         person -> person.name().equals("Maciej Kowalski"));
 
         assertThat(difference, equalTo(28 + 31));
     }
@@ -64,7 +63,7 @@ public class AddressBookTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("No person found in address book for predicateOne");
 
-        addressBook.ageDifference(person -> false, person -> true, TimeUnit.DAYS);
+        addressBook.ageDifferenceInDays(person -> false, person -> true);
     }
 
     @Test
@@ -72,7 +71,7 @@ public class AddressBookTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("No person found in address book for predicateTwo");
 
-        addressBook.ageDifference(person -> true, person -> false, TimeUnit.DAYS);
+        addressBook.ageDifferenceInDays(person -> true, person -> false);
     }
 
 }

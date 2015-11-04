@@ -35,9 +35,9 @@ public class AddressBook {
 
     /**
      * Finds a first person who meets predicateOne and a first person who meets predicateTwo,
-     * then returns their age difference in given unit.
+     * then returns their age difference in days.
      */
-    public int ageDifference(Predicate<Person> predicateOne, Predicate<Person> predicateTwo, TimeUnit unit) {
+    public int ageDifferenceInDays(Predicate<Person> predicateOne, Predicate<Person> predicateTwo) {
         LocalDate dateOfBirthOne = persons.stream()
                 .filter(predicateOne)
                 .findFirst()
@@ -50,12 +50,7 @@ public class AddressBook {
                 .map(Person::dateOfBirth)
                 .orElseThrow(() -> new IllegalArgumentException("No person found in address book for predicateTwo"));
 
-        switch (unit) {
-//            case YEARS: return Years.yearsBetween(dateOfBirthOne, dateOfBirthTwo).getYears(); // untested
-//            case MONTHS: return Months.monthsBetween(dateOfBirthOne, dateOfBirthTwo).getMonths(); // untested
-            case DAYS: return Days.daysBetween(dateOfBirthOne, dateOfBirthTwo).getDays();
-            default: throw new UnsupportedOperationException("time unit " + unit + " not supported");
-        }
+        return Days.daysBetween(dateOfBirthOne, dateOfBirthTwo).getDays();
     }
 
 }
