@@ -28,7 +28,7 @@ public class AddressBook {
     }
 
     public int ageDifference(String nameOne, String nameTwo) {
-        return Days.daysBetween(dateOfBirthOf(nameTwo), dateOfBirthOf(nameOne)).getDays();
+        return Days.daysBetween(dateOfBirthOf(nameOne), dateOfBirthOf(nameTwo)).getDays();
     }
 
     private LocalDate dateOfBirthOf(String name) {

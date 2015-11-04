@@ -51,7 +51,7 @@ public class AddressBookTest {
     public void calculatesAgeDifferenceWithinSameYear() {
         AddressBook addressBook = new AddressBook(new AddressBookLoader(new Clock(), "TestAddressBook.txt", getClass()));
 
-        int difference = addressBook.ageDifference("Maciej Kowalski", "Jaroslaw Pawlak");
+        int difference = addressBook.ageDifference("Jaroslaw Pawlak", "Maciej Kowalski");
 
         assertThat(difference, equalTo(28 + 31));
     }
