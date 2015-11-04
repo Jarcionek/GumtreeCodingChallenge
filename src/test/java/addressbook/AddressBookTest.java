@@ -7,6 +7,7 @@ import org.junit.rules.ExpectedException;
 import static addressbook.Gender.FEMALE;
 import static addressbook.Gender.MALE;
 import static com.shazam.shazamcrest.MatcherAssert.assertThat;
+import static java.util.Comparator.comparing;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 public class AddressBookTest {
@@ -18,21 +19,21 @@ public class AddressBookTest {
 
     @Test
     public void returnsNumberOfMales() {
-        int numberOfMales = addressBook.numberOf(MALE);
+        int numberOfMales = addressBook.count(person -> person.gender() == MALE);
 
         assertThat(numberOfMales, equalTo(3));
     }
 
     @Test
     public void returnsNumberOfFemales() {
-        int numberOfMales = addressBook.numberOf(FEMALE);
+        int numberOfMales = addressBook.count(person -> person.gender() == FEMALE);
 
         assertThat(numberOfMales, equalTo(2));
     }
 
     @Test
     public void returnsOldestPerson() {
-        Person person = addressBook.oldestPerson();
+        Person person = addressBook.firstPerson(comparing(Person::dateOfBirth));
 
         assertThat(person.name(), equalTo("Wes Jackson"));
     }
@@ -44,14 +45,16 @@ public class AddressBookTest {
         expectedException.expect(IllegalStateException.class);
         expectedException.expectMessage("Address book is empty");
 
-        addressBook.oldestPerson();
+        addressBook.firstPerson(comparing(Person::dateOfBirth));
     }
 
     @Test
     public void calculatesAgeDifferenceWithinSameYear() {
         AddressBook addressBook = new AddressBook(new AddressBookLoader(new Clock(), "TestAddressBook.txt", getClass()));
 
-        int difference = addressBook.ageDifference("Jaroslaw Pawlak", "Maciej Kowalski");
+        int difference = addressBook.ageDifference(person -> person.name().equals("Jaroslaw Pawlak"),
+                                                   person -> person.name().equals("Maciej Kowalski"),
+                                                   TimeUnit.DAYS);
 
         assertThat(difference, equalTo(28 + 31));
     }
@@ -59,17 +62,17 @@ public class AddressBookTest {
     @Test
     public void throwsExceptionWhenFirstPersonNotFound() {
         expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("XX YY not found in address book");
+        expectedException.expectMessage("No person found in address book for predicateOne");
 
-        addressBook.ageDifference("XX YY", "Gemma Lane");
+        addressBook.ageDifference(person -> false, person -> true, TimeUnit.DAYS);
     }
 
     @Test
     public void throwsExceptionWhenSecondPersonNotFound() {
         expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("AA BB not found in address book");
+        expectedException.expectMessage("No person found in address book for predicateTwo");
 
-        addressBook.ageDifference("Gemma Lane", "AA BB");
+        addressBook.ageDifference(person -> true, person -> false, TimeUnit.DAYS);
     }
 
 }

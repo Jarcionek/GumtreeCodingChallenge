@@ -3,9 +3,9 @@ package addressbook;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
+import java.util.Comparator;
 import java.util.List;
-
-import static java.util.Comparator.comparing;
+import java.util.function.Predicate;
 
 public class AddressBook {
 
@@ -15,28 +15,47 @@ public class AddressBook {
         persons = addressBookLoader.load();
     }
 
-    public int numberOf(Gender gender) {
+    /**
+     * Counts number of people who meet given predicate
+     */
+    public int count(Predicate<Person> predicate) {
         return (int) persons.stream()
-                .filter((Person person) -> person.gender() == gender)
+                .filter(predicate)
                 .count();
     }
 
-    public Person oldestPerson() {
+    /**
+     * Returns person with lowest value for given comparator
+     */
+    public Person firstPerson(Comparator<Person> comparator) {
         return persons.stream()
-                .min(comparing(Person::dateOfBirth))
+                .min(comparator)
                 .orElseThrow(() -> new IllegalStateException("Address book is empty"));
     }
 
-    public int ageDifference(String nameOne, String nameTwo) {
-        return Days.daysBetween(dateOfBirthOf(nameOne), dateOfBirthOf(nameTwo)).getDays();
-    }
-
-    private LocalDate dateOfBirthOf(String name) {
-        return persons.stream()
-                .filter((Person person) -> person.name().equals(name))
+    /**
+     * Finds a first person who meets predicateOne and a first person who meets predicateTwo,
+     * then returns their age difference in given unit.
+     */
+    public int ageDifference(Predicate<Person> predicateOne, Predicate<Person> predicateTwo, TimeUnit unit) {
+        LocalDate dateOfBirthOne = persons.stream()
+                .filter(predicateOne)
                 .findFirst()
                 .map(Person::dateOfBirth)
-                .orElseThrow(() -> new IllegalArgumentException(name + " not found in address book"));
+                .orElseThrow(() -> new IllegalArgumentException("No person found in address book for predicateOne"));
+
+        LocalDate dateOfBirthTwo = persons.stream()
+                .filter(predicateTwo)
+                .findFirst()
+                .map(Person::dateOfBirth)
+                .orElseThrow(() -> new IllegalArgumentException("No person found in address book for predicateTwo"));
+
+        switch (unit) {
+//            case YEARS: return Years.yearsBetween(dateOfBirthOne, dateOfBirthTwo).getYears(); // untested
+//            case MONTHS: return Months.monthsBetween(dateOfBirthOne, dateOfBirthTwo).getMonths(); // untested
+            case DAYS: return Days.daysBetween(dateOfBirthOne, dateOfBirthTwo).getDays();
+            default: throw new UnsupportedOperationException("time unit " + unit + " not supported");
+        }
     }
 
 }
