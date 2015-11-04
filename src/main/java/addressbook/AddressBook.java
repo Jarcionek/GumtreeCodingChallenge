@@ -23,7 +23,7 @@ public class AddressBook {
     public Person oldestPerson() {
         return persons.stream()
                 .min(comparing(Person::dateOfBirth))
-                .get();
+                .orElseThrow(() -> new IllegalStateException("Address book is empty"));
     }
 
     public int ageDifference(String nameOne, String nameTwo) {
