@@ -36,10 +36,10 @@ public class AddressBook {
      * Finds a first person who meets predicateOne and a first person who meets predicateTwo,
      * then returns their age difference in days.
      */
-    public int ageDifferenceInDays(Predicate<Person> predicateOne, Predicate<Person> predicateTwo) {
+    public long ageDifferenceInDays(Predicate<Person> predicateOne, Predicate<Person> predicateTwo) {
         LocalDate dateOne = dateOfBirthFor("predicateOne", predicateOne);
         LocalDate dateTwo = dateOfBirthFor("predicateTwo", predicateTwo);
-        return (int) dateOne.until(dateTwo, ChronoUnit.DAYS);
+        return dateOne.until(dateTwo, ChronoUnit.DAYS);
     }
 
 
