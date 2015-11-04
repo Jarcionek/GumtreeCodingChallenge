@@ -1,5 +1,7 @@
 package addressbook;
 
+import org.joda.time.Days;
+
 import java.util.List;
 
 import static java.util.Comparator.comparing;
@@ -27,7 +29,8 @@ public class AddressBook {
     public int ageDifference(String nameOne, String nameTwo) {
         Person personOne = persons.stream().filter((Person person) -> person.name().equals(nameOne)).findFirst().get();
         Person personTwo = persons.stream().filter((Person person) -> person.name().equals(nameTwo)).findFirst().get();
-        return 0;
+
+        return Days.daysBetween(personTwo.dateOfBirth(), personOne.dateOfBirth()).getDays();
     }
 
 }

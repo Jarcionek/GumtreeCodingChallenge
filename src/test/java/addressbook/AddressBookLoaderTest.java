@@ -1,8 +1,8 @@
 package addressbook;
 
+import org.joda.time.LocalDate;
 import org.junit.Test;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static addressbook.Gender.FEMALE;
@@ -29,7 +29,7 @@ public class AddressBookLoaderTest {
     }
 
     private static LocalDate date(int day, int month, int year) {
-        return LocalDate.of(1900 + year, month, day);
+        return new LocalDate(1900 + year, month, day);
     }
 
 }

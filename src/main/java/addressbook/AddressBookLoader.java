@@ -1,9 +1,9 @@
 package addressbook;
 
 import com.google.common.io.Resources;
+import org.joda.time.LocalDate;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -47,7 +47,7 @@ public class AddressBookLoader {
         int month = Integer.parseInt(date[1]);
         int year = Integer.parseInt(date[2]);
 
-        return LocalDate.of(1900 + year, month, day);
+        return new LocalDate(1900 + year, month, day);
     }
 
 }
