@@ -59,6 +59,20 @@ public class AddressBookTest {
     }
 
     @Test
+    public void calculatesAgeDifferenceForPeopleBornInDifferentYears() {
+        AddressBook addressBook = new AddressBook(new AddressBookLoader(new Clock(), "TestAddressBook.txt", getClass()));
+
+        int difference = addressBook.ageDifferenceInDays(person -> person.name().equals("Sarah Stone"),
+                                                         person -> person.name().equals("Paul Robinson"));
+
+        // days between 20/09/80 and 15/01/85
+        int daysIn1980 = 10 + 31 + 30 + 31;
+        int daysIn1981_1984 = 365 + 365 + 365 + 366;
+        int daysIn1985 = 15;
+        assertThat(difference, equalTo(daysIn1980 + daysIn1981_1984 + daysIn1985));
+    }
+
+    @Test
     public void throwsExceptionWhenFirstPersonNotFound() {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("No person found in address book for predicateOne");
