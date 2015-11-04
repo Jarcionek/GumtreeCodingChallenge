@@ -16,10 +16,12 @@ public class AddressBookLoader {
 
     private static final Pattern pattern = Pattern.compile("[a-zA-Z ]+, (Male|Female), \\d{2}/\\d{2}/\\d{2}");
 
+    private final Clock clock;
     private final String resourceName;
     private final Class<?> contextClass;
 
-    public AddressBookLoader(String resourceName, Class<?> contextClass) {
+    public AddressBookLoader(Clock clock, String resourceName, Class<?> contextClass) {
+        this.clock = clock;
         this.resourceName = resourceName;
         this.contextClass = contextClass;
     }
@@ -39,13 +41,13 @@ public class AddressBookLoader {
         }
     }
 
-    private static void validate(String line) {
+    private void validate(String line) {
         if (!pattern.matcher(line).matches()) {
             throw new IllegalArgumentException("Not a valid address book file, invalid line: `" + line + "`");
         }
     }
 
-    private static Person newPerson(String name, String gender, String dateOfBirth) {
+    private Person newPerson(String name, String gender, String dateOfBirth) {
         return new Person(
                 name,
                 Gender.valueOf(gender.toUpperCase()),
@@ -53,12 +55,16 @@ public class AddressBookLoader {
         );
     }
 
-    private static LocalDate newDate(String[] date) {
+    private LocalDate newDate(String[] date) {
         int day = parseInt(date[0]);
         int month = parseInt(date[1]);
-        int year = parseInt(date[2]);
+        int year = 1900 + parseInt(date[2]);
 
-        return new LocalDate(1900 + year, month, day);
+        if (clock.now().getYear() - year > 100) {
+            year += 100;
+        }
+
+        return new LocalDate(year, month, day);
     }
 
 }

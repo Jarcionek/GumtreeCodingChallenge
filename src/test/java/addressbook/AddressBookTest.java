@@ -14,7 +14,7 @@ public class AddressBookTest {
     @Rule
     public final ExpectedException expectedException = ExpectedException.none();
 
-    private final AddressBook addressBook = new AddressBook(new AddressBookLoader("AddressBook.txt", AddressBookLoader.class));
+    private final AddressBook addressBook = new AddressBook(new AddressBookLoader(new Clock(), "AddressBook.txt", AddressBookLoader.class));
 
     @Test
     public void returnsNumberOfMales() {
@@ -39,7 +39,7 @@ public class AddressBookTest {
 
     @Test
     public void throwsExceptionIfAddressBookIsEmpty() {
-        AddressBook addressBook = new AddressBook(new AddressBookLoader("EmptyAddressBook.txt", getClass()));
+        AddressBook addressBook = new AddressBook(new AddressBookLoader(new Clock(), "EmptyAddressBook.txt", getClass()));
 
         expectedException.expect(IllegalStateException.class);
         expectedException.expectMessage("Address book is empty");
@@ -49,7 +49,7 @@ public class AddressBookTest {
 
     @Test
     public void calculatesAgeDifferenceWithinSameYear() {
-        AddressBook addressBook = new AddressBook(new AddressBookLoader("TestAddressBook.txt", getClass()));
+        AddressBook addressBook = new AddressBook(new AddressBookLoader(new Clock(), "TestAddressBook.txt", getClass()));
 
         int difference = addressBook.ageDifference("Maciej Kowalski", "Jaroslaw Pawlak");
 
